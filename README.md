@@ -2,6 +2,8 @@
 
 Demo of internationalizing a Flutter app with Google spreadsheet.
 
+![Screenshot of the app](app.jpg)
+
 ## Getting Started
 
 The app fetches translations from Google spreadsheet located here:
