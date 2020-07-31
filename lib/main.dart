@@ -31,10 +31,6 @@ class MyAppState extends State<MyApp> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('en'),
-        const Locale('de'),
-      ],
       locale: Locale('en'),
       home: MyHomePage(onLocaleChange),
     );
@@ -68,10 +64,9 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               DropdownButton(
-                items: [
-                  DropdownMenuItem(child: Text('English'), value: 'en'),
-                  DropdownMenuItem(child: Text('Deutsch'), value: 'de'),
-                ],
+                items: AppLocalizations.of(context).supportedLocales.map((locale) {
+                  return DropdownMenuItem(child: Text(locale.toUpperCase()), value: locale);
+                }).toList(),
                 value: AppLocalizations.of(context).locale.languageCode,
                 onChanged: (String value) {
                   Locale newLocale = Locale(value);
