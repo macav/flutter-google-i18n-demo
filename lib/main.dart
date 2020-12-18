@@ -22,16 +22,17 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Internationalization Demo',
+      title: 'Flutter Google I18n Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       localizationsDelegates: [
-        AppLocalizationsDelegate(),
+        GoogleI18nLocalizationsDelegate(
+            'https://spreadsheets.google.com/feeds/list/1TGbtKpdNRptYwUVtqmkI2L7Ix00i-fQMnrChGHx2Ajk/1/public/values?alt=json'),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      locale: Locale('en'),
+      locale: locale,
       home: MyHomePage(onLocaleChange),
     );
   }
@@ -53,24 +54,24 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).t('title')),
+        title: Text('Flutter Google I18n'),
       ),
       body: Center(
           child: Column(
         children: <Widget>[
-          Text(AppLocalizations.of(context).t('title')),
+          Text(GoogleI18nLocalizations.of(context).t('title')),
           Padding(padding: EdgeInsets.only(top: 30)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               DropdownButton(
-                items: AppLocalizations.of(context).supportedLocales.map((locale) {
+                items: GoogleI18nLocalizations.of(context).supportedLocales.map((locale) {
                   return DropdownMenuItem(child: Text(locale.toUpperCase()), value: locale);
                 }).toList(),
-                value: AppLocalizations.of(context).locale.languageCode,
+                value: GoogleI18nLocalizations.of(context).locale.languageCode,
                 onChanged: (String value) {
                   Locale newLocale = Locale(value);
-                  AppLocalizations.refresh(context, newLocale);
+                  GoogleI18nLocalizations.refresh(context, newLocale);
                   this.onLocaleSwitch(newLocale);
                 },
               ),
@@ -78,12 +79,13 @@ class MyHomePage extends StatelessWidget {
               RaisedButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: Text("Switch to ${AppLocalizations.of(context).locale.languageCode == 'en' ? 'DE' : 'EN'}"),
+                  child: Text(
+                      "Switch to ${GoogleI18nLocalizations.of(context).locale.languageCode == 'en' ? 'DE' : 'EN'}"),
                   onPressed: () {
-                    Locale newLocale = AppLocalizations.of(context).locale.languageCode == 'en'
+                    Locale newLocale = GoogleI18nLocalizations.of(context).locale.languageCode == 'en'
                         ? const Locale('de')
                         : const Locale('en');
-                    AppLocalizations.refresh(context, newLocale);
+                    GoogleI18nLocalizations.refresh(context, newLocale);
                     this.onLocaleSwitch(newLocale);
                   })
             ],
