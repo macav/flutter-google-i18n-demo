@@ -1,6 +1,7 @@
 # flutter-google-i18n-demo
 
 Demo of internationalizing a Flutter app using Google spreadsheet.
+The source code for the package is available here: https://github.com/macav/flutter-google-i18n
 
 ![Demo gif](app.gif)
 
