@@ -52,6 +52,8 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GoogleI18nLocalizations i18n = GoogleI18nLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter Google I18n'),
@@ -59,16 +61,16 @@ class MyHomePage extends StatelessWidget {
       body: Center(
           child: Column(
         children: <Widget>[
-          Text(GoogleI18nLocalizations.of(context).t('title')),
+          Text(i18n.t('title')),
           Padding(padding: EdgeInsets.only(top: 30)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               DropdownButton(
-                items: GoogleI18nLocalizations.of(context).supportedLocales.map((locale) {
+                items: i18n.supportedLocales.map((locale) {
                   return DropdownMenuItem(child: Text(locale.toUpperCase()), value: locale);
                 }).toList(),
-                value: GoogleI18nLocalizations.of(context).locale.languageCode,
+                value: i18n.locale.languageCode,
                 onChanged: (String value) {
                   Locale newLocale = Locale(value);
                   GoogleI18nLocalizations.refresh(context, newLocale);
@@ -79,12 +81,9 @@ class MyHomePage extends StatelessWidget {
               RaisedButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: Text(
-                      "Switch to ${GoogleI18nLocalizations.of(context).locale.languageCode == 'en' ? 'DE' : 'EN'}"),
+                  child: Text("Switch to ${i18n.locale.languageCode == 'en' ? 'DE' : 'EN'}"),
                   onPressed: () {
-                    Locale newLocale = GoogleI18nLocalizations.of(context).locale.languageCode == 'en'
-                        ? const Locale('de')
-                        : const Locale('en');
+                    Locale newLocale = i18n.locale.languageCode == 'en' ? const Locale('de') : const Locale('en');
                     GoogleI18nLocalizations.refresh(context, newLocale);
                     this.onLocaleSwitch(newLocale);
                   })
