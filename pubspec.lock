@@ -72,9 +72,9 @@ packages:
   flutter_google_i18n:
     dependency: "direct main"
     description:
-      path: flutter_google_i18n
-      relative: true
-    source: path
+      name: flutter_google_i18n
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   flutter_localizations:
     dependency: "direct main"
