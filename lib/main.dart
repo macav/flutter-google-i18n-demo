@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 void main() => runApp(MyApp());
 
 class MyAppState extends State<MyApp> {
-  Locale locale;
+  late Locale locale;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GoogleI18nLocalizations i18n = GoogleI18nLocalizations.of(context);
+    GoogleI18nLocalizations i18n = GoogleI18nLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -67,24 +67,31 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               DropdownButton(
-                items: i18n.supportedLocales.map((locale) {
-                  return DropdownMenuItem(child: Text(locale.toUpperCase()), value: locale);
+                items: i18n.supportedLocales!.map((locale) {
+                  return DropdownMenuItem(
+                      child: Text(locale.toUpperCase()), value: locale);
                 }).toList(),
                 value: i18n.locale.languageCode,
-                onChanged: (String value) {
-                  Locale newLocale = Locale(value);
-                  GoogleI18nLocalizations.refresh(context, newLocale);
+                onChanged: (String? value) {
+                  Locale newLocale = Locale(value!);
+                  GoogleI18nLocalizations.setLocale(context, newLocale);
                   this.onLocaleSwitch(newLocale);
                 },
               ),
               Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-              RaisedButton(
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  child: Text("Switch to ${i18n.locale.languageCode == 'en' ? 'DE' : 'EN'}"),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(color: Colors.white),
+                    primary: Colors.blue,
+                    onPrimary: Colors.white,
+                  ),
+                  child: Text(
+                      "Switch to ${i18n.locale.languageCode == 'en' ? 'DE' : 'EN'}"),
                   onPressed: () {
-                    Locale newLocale = i18n.locale.languageCode == 'en' ? const Locale('de') : const Locale('en');
-                    GoogleI18nLocalizations.refresh(context, newLocale);
+                    Locale newLocale = i18n.locale.languageCode == 'en'
+                        ? const Locale('de')
+                        : const Locale('en');
+                    GoogleI18nLocalizations.setLocale(context, newLocale);
                     this.onLocaleSwitch(newLocale);
                   })
             ],
